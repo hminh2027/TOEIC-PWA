@@ -2,11 +2,10 @@
 A pwa that supports learning and practicing for the toeic exam
 
 Tech stacks:
-- fe: react
+- fe: react + zustand + tailwind
 - be: nest
-- db: mysql + graphql
+- db: mysql + prisma
 - cache: redis
-- ORM: prisma
 - deploy: docker
 
 Requirements:

@@ -9,7 +9,7 @@ export function loggingMiddleware(): Prisma.Middleware {
     const after = Date.now();
 
     console.log(
-      `Prisma Query ${params.model}.${params.action} took ${after - before}ms`
+      `Prisma Query ${params.model}.${params.action} took ${after - before}ms`,
     );
 
     return result;
