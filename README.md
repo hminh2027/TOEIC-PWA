@@ -8,3 +8,6 @@ Tech stacks:
 - cache: redis
 - ORM: prisma
 - deploy: docker
+
+Requirements:
+- 
