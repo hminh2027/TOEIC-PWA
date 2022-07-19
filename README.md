@@ -25,5 +25,5 @@ Requirements:
 - feedback câu hỏi
 - chức năng giải đề
 
-Database design: ![Database](database/KikTOEIC.png)
+Database design: ![Database](database/TOEIC.png)
 Detail System design: ...
