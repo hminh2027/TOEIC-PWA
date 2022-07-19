@@ -11,7 +11,6 @@ Table User {
   firstname String
   lastname String
   posts Post [not null]
-  role Role [not null]
 }
 
 Table Post {
@@ -23,11 +22,6 @@ Table Post {
   content String
   author User
   authorId String
-}
-
-Enum Role {
-  ADMIN
-  USER
 }
 
 Ref: Post.authorId > User.id

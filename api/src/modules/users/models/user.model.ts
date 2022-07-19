@@ -1,5 +1,5 @@
 import { Post } from 'src/modules/posts/models/post.model';
-import { Role } from '@prisma/client';
+// import { Role } from '@prisma/client';
 
 // registerEnumType(Role, {
 //   name: 'Role',
@@ -11,7 +11,7 @@ export class User {
   firstname?: string;
   lastname?: string;
   // @Field(() => Role)
-  role: Role;
+  // role: Role;
   posts: Post[];
   // @HideField()
   password: string;

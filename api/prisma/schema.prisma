@@ -1,5 +1,5 @@
 datasource db {
-  provider = "postgresql"
+  provider = "mysql"
   url      = env("DATABASE_URL")
 }
 
@@ -21,7 +21,7 @@ model User {
   firstname String?
   lastname  String?
   posts     Post[]
-  role      Role
+  // role      Role
 }
 
 model Post {
@@ -35,7 +35,7 @@ model Post {
   authorId  String?
 }
 
-enum Role {
-  ADMIN
-  USER
-}
+// enum Role {
+//   ADMIN
+//   USER
+// }

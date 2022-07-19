@@ -1,4 +1,8 @@
-import { ValidationPipe } from '@nestjs/common';
+import {
+  BadRequestException,
+  ValidationError,
+  ValidationPipe,
+} from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { HttpAdapterHost, NestFactory } from '@nestjs/core';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
@@ -10,11 +14,27 @@ import type {
   SwaggerConfig,
 } from 'src/common/configs/config.interface';
 
+declare const module: any;
+
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
-
+  const globalPrefix = '/api';
   // Validation
-  app.useGlobalPipes(new ValidationPipe());
+  app.useGlobalPipes(
+    new ValidationPipe({
+      transform: true,
+      stopAtFirstError: true,
+      exceptionFactory: (validationError: ValidationError[]) => {
+        const errors = validationError.map((err) => ({
+          [err.property]: Object.values(err.constraints)[0],
+        }));
+        return new BadRequestException(errors);
+      },
+    }),
+  );
+
+  // Global Prefix
+  app.setGlobalPrefix(globalPrefix);
 
   // enable shutdown hook
   const prismaService: PrismaService = app.get(PrismaService);
@@ -24,28 +44,46 @@ async function bootstrap() {
   const { httpAdapter } = app.get(HttpAdapterHost);
   app.useGlobalFilters(new PrismaClientExceptionFilter(httpAdapter));
 
+  // Get all config
   const configService = app.get(ConfigService);
   const nestConfig = configService.get<NestConfig>('nest');
   const corsConfig = configService.get<CorsConfig>('cors');
   const swaggerConfig = configService.get<SwaggerConfig>('swagger');
-
-  // Swagger Api
-  if (swaggerConfig.enabled) {
-    const options = new DocumentBuilder()
-      .setTitle(swaggerConfig.title || 'Nestjs')
-      .setDescription(swaggerConfig.description || 'The nestjs API description')
-      .setVersion(swaggerConfig.version || '1.0')
-      .build();
-    const document = SwaggerModule.createDocument(app, options);
-
-    SwaggerModule.setup(swaggerConfig.path || 'api', app, document);
-  }
 
   // Cors
   if (corsConfig.enabled) {
     app.enableCors();
   }
 
+  // Swagger Api
+  if (swaggerConfig.enabled) {
+    const options = new DocumentBuilder()
+      .setTitle(swaggerConfig.title)
+      .setDescription(swaggerConfig.description)
+      .setVersion(swaggerConfig.version)
+      .build();
+    const document = SwaggerModule.createDocument(app, options);
+
+    SwaggerModule.setup(swaggerConfig.path, app, document);
+  }
+
   await app.listen(process.env.PORT || nestConfig.port || 3000);
+
+  // for Hot Module Reload
+  if (module.hot) {
+    module.hot.accept();
+    module.hot.dispose(() => app.close());
+  }
+
+  // Log current url of app and documentation
+  let baseUrl = app.getHttpServer().address().address;
+  if (baseUrl === '0.0.0.0' || baseUrl === '::') {
+    baseUrl = 'localhost';
+  }
+  const url = `http://${baseUrl}:${AppModule.port}${globalPrefix}`;
+  console.log(`Listening to ${url}`);
+  if (AppModule.isDev) {
+    console.log(`API Documentation available at ${url}/docs`);
+  }
 }
 bootstrap();

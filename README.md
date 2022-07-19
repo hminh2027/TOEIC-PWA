@@ -20,7 +20,10 @@ Requirements:
   - thời gian học
   - phổ điểm từng part
 - lưu câu hỏi yêu thích và chú thích
-- lưu vocab
+- lưu và quản lý vocab
 - tích hợp từ điển
-- feedback câu hỏi 
+- feedback câu hỏi
 - chức năng giải đề
+
+Database design: ![Database](database/KikTOEIC.png)
+Detail System design: ...

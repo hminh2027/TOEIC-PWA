@@ -1,5 +1,5 @@
 import { Module } from '@nestjs/common';
-import { ConfigModule } from '@nestjs/config';
+import { ConfigModule, ConfigService } from '@nestjs/config';
 import { PrismaModule } from 'nestjs-prisma';
 import { AuthModule } from 'src/modules/auth/auth.module';
 import { UsersModule } from 'src/modules/users/users.module';
@@ -21,4 +21,12 @@ import { loggingMiddleware } from 'src/common/middleware/logging.middleware';
     PostsModule,
   ],
 })
-export class AppModule {}
+export class AppModule {
+  static port: string | number;
+  static isDev: boolean;
+
+  constructor(config: ConfigService) {
+    AppModule.port = config.get('PORT');
+    AppModule.isDev = config.get('NODE_ENV');
+  }
+}

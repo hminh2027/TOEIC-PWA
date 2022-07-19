@@ -33,7 +33,7 @@ export class AuthService {
         data: {
           ...payload,
           password: hashedPassword,
-          role: 'USER',
+          // role: 'USER',
         },
       });
 
@@ -96,7 +96,7 @@ export class AuthService {
   private generateRefreshToken(payload: { userId: string }): string {
     const securityConfig = this.configService.get<SecurityConfig>('security');
     return this.jwtService.sign(payload, {
-      secret: this.configService.get('JWT_REFRESH_SECRET'),
+      secret: this.configService.get('REFRESH_TOKEN_SECRET'),
       expiresIn: securityConfig.refreshIn,
     });
   }
@@ -104,7 +104,7 @@ export class AuthService {
   refreshToken(token: string) {
     try {
       const { userId } = this.jwtService.verify(token, {
-        secret: this.configService.get('JWT_REFRESH_SECRET'),
+        secret: this.configService.get('REFRESH_TOKEN_SECRET'),
       });
 
       return this.generateTokens({

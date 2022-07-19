@@ -15,7 +15,7 @@ import { SecurityConfig } from 'src/common/configs/config.interface';
       useFactory: async (configService: ConfigService) => {
         const securityConfig = configService.get<SecurityConfig>('security');
         return {
-          secret: configService.get<string>('JWT_ACCESS_SECRET'),
+          secret: configService.get<string>('ACCESS_TOKEN_SECRET'),
           signOptions: {
             expiresIn: securityConfig.expiresIn,
           },
