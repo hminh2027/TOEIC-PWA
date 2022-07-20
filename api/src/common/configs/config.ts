@@ -9,15 +9,15 @@ const config: Config = {
   },
   swagger: {
     enabled: true,
-    title: 'Nestjs FTW',
-    description: 'The nestjs API description',
-    version: '1.5',
-    path: 'api',
+    title: 'Toeic PWA',
+    description:
+      'A pwa that supports learning and practicing for the toeic exam',
+    version: '1.0',
+    path: 'api/docs',
   },
   security: {
     expiresIn: '2m',
-    refreshIn: '7d',
-    bcryptSaltOrRound: 10,
+    refreshIn: '60d',
   },
 };
 

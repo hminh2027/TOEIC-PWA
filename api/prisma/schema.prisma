@@ -13,29 +13,121 @@ generator dbml {
 }
 
 model User {
-  id        String   @id @default(cuid())
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-  email     String   @unique
-  password  String
-  firstname String?
-  lastname  String?
-  posts     Post[]
-  // role      Role
+  @@map("users")
+  id          String    @id @default(cuid())
+  email       String    @unique
+  password    String
+  username    String?
+  avatar      String?
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+  active      Boolean   @default(true)
+  //  1-1
+  config      Config?
+  //  1-N
+  favorites   Favorite[]
+  attempts    Attempt[]
+  feedbacks   Feedback[]
+  role        Role      @default(USER)
 }
 
-model Post {
-  id        String   @id @default(cuid())
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-  published Boolean
-  title     String
-  content   String?
-  author    User?    @relation(fields: [authorId], references: [id])
-  authorId  String?
+model Config {
+  @@map("configs")
+  id          String    @id @default(cuid())
+  files       String
+  //  1-1
+  user        User      @relation(fields: [userId], references: [id])
+  userId      String    @unique
 }
 
-// enum Role {
-//   ADMIN
-//   USER
-// }
+model Favorite {
+  @@map("favorites")
+  id          String    @id @default(cuid())
+  note        String?
+  //  1-1
+  question    Question? @relation(fields: [questionId], references: [id])
+  questionId  String?   @unique
+  //  N-1
+  user        User?     @relation(fields: [userId], references: [id])
+  userId      String?   @unique 
+}
+
+model Test {
+  @@map("tests")
+  id          String    @id @default(cuid())
+  title       String
+  score       Int
+  slug        String
+  duration    Int
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+  deleted     Boolean   @default(false)
+  //  1-N
+  attempts    Attempt[]
+  questions   Question[]
+}
+
+model Attempt {
+  @@map("attempts")
+  id          String    @id @default(cuid())
+  score       Int
+  status      AttemptStatus      @default(NONE)
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+  deleted     Boolean   @default(false)
+  //  N-1
+  user        User?     @relation(fields: [userId], references: [id])
+  userId      String?   @unique
+  test        Test?     @relation(fields: [testId], references: [id])
+  testId      String?   @unique
+}
+
+model Question {
+  @@map("questions")
+  id          String    @id @default(cuid())
+  content     String
+  //  1-1
+  favorite    Favorite?
+  //  N-1
+  test        Test?     @relation(fields: [testId], references: [id])
+  testId      String?   @unique
+  feedback    Feedback?
+  //  1-N
+  choices     Choice[]
+}
+
+model Choice {
+  @@map("choices")
+  id          String    @id @default(cuid())
+  content     String
+  //  N-1
+  question    Question? @relation(fields: [questionId], references: [id])
+  questionId  String?   @unique
+}
+
+model Feedback {
+  @@map("feedbacks")
+  id          String    @id @default(cuid())
+  content     String
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+  deleted     Boolean   @default(false)
+  //  1-1
+  question    Question  @relation(fields: [questionId], references: [id])
+  questionId  String    @unique
+  //  N-1
+  user        User?     @relation(fields: [userId], references: [id])
+  userId      String?   @unique
+}
+
+enum Role {
+  ADMIN
+  USER
+}
+
+enum AttemptStatus {
+  NONE
+  INPROGRESS
+  FINISHED
+  ABANDONED
+}

@@ -33,7 +33,7 @@ Table TESTS {
   title varchar(255)
   score int
   slug varchar(255)
-  duration varchar(255)
+  duration int
   created_at datetime [default: `getdate()`]
   updated_at datetime [default: `getdate()`]
   is_deleted bit [default: 0]
