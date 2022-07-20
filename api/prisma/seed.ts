@@ -11,7 +11,8 @@ async function main() {
     data: {
       email: 'admin@gmail.com',
       username: 'admin',
-      password: '123',
+      password:
+        '6dc10cfa72771ab641611005cad7d4da1acfcaa613921e67982e9ccf7503b66c',
       avatar: '',
       role: Role.ADMIN,
     },
@@ -20,7 +21,8 @@ async function main() {
     data: {
       email: 'user@gmail.com',
       username: 'user',
-      password: '123',
+      password:
+        '6dc10cfa72771ab641611005cad7d4da1acfcaa613921e67982e9ccf7503b66c',
       avatar: '',
       role: Role.USER,
     },
