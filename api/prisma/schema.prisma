@@ -88,10 +88,10 @@ model Question {
   content     String
   //  1-1
   favorite    Favorite?
+  feedback    Feedback?
   //  N-1
   test        Test?     @relation(fields: [testId], references: [id])
   testId      String?   @unique
-  feedback    Feedback?
   //  1-N
   choices     Choice[]
 }

@@ -23,7 +23,6 @@ import { GoogleService } from './google.service';
 
 @Controller('auth')
 @ApiTags('authentication')
-@ApiBearerAuth()
 @UsePipes(ValidationPipe)
 export class AuthController {
   constructor(
@@ -69,6 +68,7 @@ export class AuthController {
   }
 
   @Post('logout')
+  @ApiBearerAuth()
   @ApiOperation({
     description: 'Revoke tokens',
   })
@@ -89,6 +89,7 @@ export class AuthController {
   }
 
   @Post('refresh')
+  @ApiBearerAuth()
   @ApiOperation({
     description: 'Return access token',
   })
