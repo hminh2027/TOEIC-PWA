@@ -18,9 +18,4 @@ import { UsersService } from './users.service';
 @UseGuards(JwtAuthGuard, RolesGuard)
 export class UsersController {
   constructor(private readonly usersService: UsersService) {}
-
-  @Get()
-  async getUsers(): Promise<string> {
-    return await this.usersService.getUsers();
-  }
 }

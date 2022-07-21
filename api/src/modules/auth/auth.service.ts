@@ -30,18 +30,6 @@ export class AuthService {
     };
   }
 
-  private generateAccessToken(payload: { userId: string }): string {
-    return this.jwtService.sign(payload);
-  }
-
-  private generateRefreshToken(payload: { userId: string }): string {
-    const securityConfig = this.configService.get<SecurityConfig>('security');
-    return this.jwtService.sign(payload, {
-      secret: this.configService.get('REFRESH_TOKEN_SECRET'),
-      expiresIn: securityConfig.refreshIn,
-    });
-  }
-
   refreshToken(token: string) {
     try {
       const { userId } = this.jwtService.verify(token, {
@@ -54,5 +42,19 @@ export class AuthService {
     } catch (e) {
       throw new UnauthorizedException();
     }
+  }
+
+  revokeToken(token: string) {}
+
+  private generateAccessToken(payload: { userId: string }): string {
+    return this.jwtService.sign(payload);
+  }
+
+  private generateRefreshToken(payload: { userId: string }): string {
+    const securityConfig = this.configService.get<SecurityConfig>('security');
+    return this.jwtService.sign(payload, {
+      secret: this.configService.get('REFRESH_TOKEN_SECRET'),
+      expiresIn: securityConfig.refreshIn,
+    });
   }
 }

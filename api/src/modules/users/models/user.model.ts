@@ -1,6 +1,7 @@
 import { Role } from '@prisma/client';
 
-export class User {
+export class UserModel {
+  id?: string;
   email: string;
   username: string;
   avatar?: string;
