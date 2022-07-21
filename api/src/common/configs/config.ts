@@ -19,6 +19,9 @@ const config: Config = {
     expiresIn: '2m',
     refreshIn: '60d',
   },
+  redis: {
+    uri: 'REDIS_URI=redis://localhost:6379',
+  },
 };
 
 export default (): Config => config;

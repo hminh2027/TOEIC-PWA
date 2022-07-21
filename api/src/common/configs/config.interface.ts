@@ -3,6 +3,7 @@ export interface Config {
   cors: CorsConfig;
   swagger: SwaggerConfig;
   security: SecurityConfig;
+  redis: RedisConfig;
 }
 
 export interface NestConfig {
@@ -24,4 +25,8 @@ export interface SwaggerConfig {
 export interface SecurityConfig {
   expiresIn: string;
   refreshIn: string;
+}
+
+export interface RedisConfig {
+  uri: string;
 }

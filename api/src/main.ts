@@ -13,6 +13,7 @@ import type {
   NestConfig,
   SwaggerConfig,
 } from 'src/common/configs/config.interface';
+import { RedisIoAdapter } from './common/adapters/redis-io.adapter';
 
 declare const module: any;
 
@@ -67,6 +68,11 @@ async function bootstrap() {
 
     SwaggerModule.setup(swaggerConfig.path, app, document);
   }
+
+  // Redis
+  const redisIoAdapter: any = new RedisIoAdapter(configService);
+  await redisIoAdapter.connectToRedis();
+  app.useWebSocketAdapter(redisIoAdapter);
 
   await app.listen(process.env.PORT || nestConfig.port || 3000);
 
