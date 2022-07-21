@@ -1,26 +1,26 @@
 import { Injectable } from '@nestjs/common';
-import { CreateTestDto } from './dto/create-test.dto';
-import { UpdateTestDto } from './dto/update-test.dto';
+import { PrismaService } from 'nestjs-prisma';
+import { CreateTestInput } from './dto/create-test.input';
+import { UpdateTestInput } from './dto/update-test.input';
 
 @Injectable()
 export class TestsService {
-  create(createTestDto: CreateTestDto) {
-    return 'This action adds a new test';
+  constructor(private readonly prismaService: PrismaService) {}
+  create(payload: CreateTestInput) {
+    return this.prismaService.test.create({ data: payload });
   }
 
-  findAll() {
-    return `This action returns all tests`;
+  update(id: string, payload: UpdateTestInput) {
+    return this.prismaService.test.update({
+      where: { id },
+      data: payload,
+    });
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} test`;
-  }
-
-  update(id: number, updateTestDto: UpdateTestDto) {
-    return `This action updates a #${id} test`;
-  }
-
-  remove(id: number) {
-    return `This action removes a #${id} test`;
+  remove(id: string) {
+    return this.prismaService.test.update({
+      where: { id },
+      data: { deleted: true },
+    });
   }
 }
