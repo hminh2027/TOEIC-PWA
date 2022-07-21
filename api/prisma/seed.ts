@@ -6,7 +6,7 @@ async function main() {
   await prisma.user.deleteMany();
 
   console.log('Seeding...');
-
+  console.log('Start seeding users');
   const user1 = await prisma.user.create({
     data: {
       email: 'admin@gmail.com',
@@ -29,6 +29,19 @@ async function main() {
   });
 
   console.log({ user1, user2 });
+
+  console.log('Start seeding test sources');
+  const source = await prisma.testSource.createMany({
+    data: [
+      { name: 'ETC 2020' },
+      { name: 'ETC 2021' },
+      { name: 'ETC 2022' },
+      { name: 'Economy 2018' },
+    ],
+  });
+
+  console.log(source);
+  console.log('Finished seeding');
 }
 
 main()

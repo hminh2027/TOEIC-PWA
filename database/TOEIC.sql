@@ -1,111 +1,137 @@
-CREATE TABLE `USERS` (
-  `id` int PRIMARY KEY AUTO_INCREMENT,
-  `role_id` int NOT NULL,
-  `username` nvarchar(255),
-  `email` varchar(50) UNIQUE,
-  `password` varchar(100),
-  `avatar` varchar(255),
-  `created_at` datetime DEFAULT (getdate()),
-  `updated_at` datetime DEFAULT (getdate()),
-  `is_active` bit DEFAULT 1
-);
+-- CreateTable
+CREATE TABLE `users` (
+    `id` VARCHAR(191) NOT NULL,
+    `email` VARCHAR(191) NOT NULL,
+    `password` VARCHAR(191) NOT NULL,
+    `username` VARCHAR(191) NULL,
+    `avatar` VARCHAR(191) NULL,
+    `createdAt` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3),
+    `updatedAt` DATETIME(3) NOT NULL,
+    `active` BOOLEAN NOT NULL DEFAULT true,
+    `role` ENUM('ADMIN', 'USER') NOT NULL DEFAULT 'USER',
 
-CREATE TABLE `CONFIGS` (
-  `id` int PRIMARY KEY AUTO_INCREMENT,
-  `user_id` int NOT NULL,
-  `config_file` varchar(255)
-);
+    UNIQUE INDEX `users_email_key`(`email`),
+    PRIMARY KEY (`id`)
+) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 
-CREATE TABLE `FAVORITES` (
-  `id` int PRIMARY KEY AUTO_INCREMENT,
-  `user_id` int NOT NULL,
-  `question_id` int NOT NULL,
-  `note` nvarchar(255)
-);
+-- CreateTable
+CREATE TABLE `configs` (
+    `id` VARCHAR(191) NOT NULL,
+    `files` VARCHAR(191) NOT NULL,
+    `userId` VARCHAR(191) NOT NULL,
 
-CREATE TABLE `ROLES` (
-  `id` int PRIMARY KEY AUTO_INCREMENT,
-  `name` nvarchar(255)
-);
+    UNIQUE INDEX `configs_userId_key`(`userId`),
+    PRIMARY KEY (`id`)
+) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 
-CREATE TABLE `TESTS` (
-  `id` int PRIMARY KEY AUTO_INCREMENT,
-  `title` varchar(255),
-  `score` int,
-  `slug` varchar(255),
-  `duration` varchar(255),
-  `created_at` datetime DEFAULT (getdate()),
-  `updated_at` datetime DEFAULT (getdate()),
-  `is_deleted` bit DEFAULT 0
-);
+-- CreateTable
+CREATE TABLE `favorites` (
+    `id` VARCHAR(191) NOT NULL,
+    `note` VARCHAR(191) NULL,
+    `questionId` VARCHAR(191) NULL,
+    `userId` VARCHAR(191) NOT NULL,
 
-CREATE TABLE `ATTEMPTS` (
-  `id` int PRIMARY KEY AUTO_INCREMENT,
-  `user_id` int NOT NULL,
-  `test_id` int NOT NULL,
-  `status_id` int NOT NULL,
-  `score` int,
-  `created_at` datetime DEFAULT (getdate()),
-  `updated_at` datetime DEFAULT (getdate()),
-  `is_deleted` bit DEFAULT 0
-);
+    UNIQUE INDEX `favorites_questionId_key`(`questionId`),
+    PRIMARY KEY (`id`)
+) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 
-CREATE TABLE `ATTEMPT_CHOICES` (
-  `id` int PRIMARY KEY AUTO_INCREMENT,
-  `attempt_id` int NOT NULL,
-  `choice_id` int NOT NULL
-);
+-- CreateTable
+CREATE TABLE `tests` (
+    `id` VARCHAR(191) NOT NULL,
+    `title` VARCHAR(191) NOT NULL,
+    `score` INTEGER NOT NULL,
+    `duration` INTEGER NOT NULL,
+    `createdAt` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3),
+    `updatedAt` DATETIME(3) NOT NULL,
+    `deleted` BOOLEAN NOT NULL DEFAULT false,
+    `testCategory` ENUM('PART1', 'PART2', 'PART3', 'PART4', 'PART5', 'PART6', 'PART7', 'FULLTEST') NOT NULL,
+    `testSkill` ENUM('LISTENING', 'READING') NOT NULL,
+    `testSourceId` VARCHAR(191) NOT NULL,
 
-CREATE TABLE `ATTEMPT_STATUS` (
-  `id` int PRIMARY KEY AUTO_INCREMENT,
-  `name` varchar(255)
-);
+    PRIMARY KEY (`id`)
+) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 
-CREATE TABLE `QUESTIONS` (
-  `id` int PRIMARY KEY AUTO_INCREMENT,
-  `test_id` int NOT NULL,
-  `content` varchar(255)
-);
+-- CreateTable
+CREATE TABLE `test_sources` (
+    `id` VARCHAR(191) NOT NULL,
+    `name` VARCHAR(191) NOT NULL,
 
-CREATE TABLE `CHOICES` (
-  `id` int PRIMARY KEY AUTO_INCREMENT,
-  `question_id` int NOT NULL,
-  `content` nvarchar(255),
-  `is_correct` bit
-);
+    UNIQUE INDEX `test_sources_name_key`(`name`),
+    PRIMARY KEY (`id`)
+) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 
-CREATE TABLE `FEEDBACKS` (
-  `id` int PRIMARY KEY AUTO_INCREMENT,
-  `user_id` int NOT NULL,
-  `question_id` int NOT NULL,
-  `content` nvarchar(255),
-  `created_at` datetime DEFAULT (getdate()),
-  `updated_at` datetime DEFAULT (getdate()),
-  `is_deleted` bit DEFAULT 0
-);
+-- CreateTable
+CREATE TABLE `attempts` (
+    `id` VARCHAR(191) NOT NULL,
+    `score` INTEGER NOT NULL,
+    `status` ENUM('NONE', 'INPROGRESS', 'FINISHED', 'ABANDONED') NOT NULL DEFAULT 'NONE',
+    `createdAt` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3),
+    `updatedAt` DATETIME(3) NOT NULL,
+    `deleted` BOOLEAN NOT NULL DEFAULT false,
+    `userId` VARCHAR(191) NOT NULL,
+    `testId` VARCHAR(191) NOT NULL,
 
-ALTER TABLE `USERS` ADD FOREIGN KEY (`role_id`) REFERENCES `ROLES` (`id`);
+    PRIMARY KEY (`id`)
+) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 
-ALTER TABLE `CONFIGS` ADD FOREIGN KEY (`user_id`) REFERENCES `USERS` (`id`);
+-- CreateTable
+CREATE TABLE `questions` (
+    `id` VARCHAR(191) NOT NULL,
+    `content` VARCHAR(191) NOT NULL,
+    `testId` VARCHAR(191) NOT NULL,
 
-ALTER TABLE `FAVORITES` ADD FOREIGN KEY (`user_id`) REFERENCES `USERS` (`id`);
+    PRIMARY KEY (`id`)
+) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 
-ALTER TABLE `FAVORITES` ADD FOREIGN KEY (`question_id`) REFERENCES `QUESTIONS` (`id`);
+-- CreateTable
+CREATE TABLE `choices` (
+    `id` VARCHAR(191) NOT NULL,
+    `content` VARCHAR(191) NOT NULL,
+    `questionId` VARCHAR(191) NOT NULL,
 
-ALTER TABLE `ATTEMPTS` ADD FOREIGN KEY (`user_id`) REFERENCES `USERS` (`id`);
+    PRIMARY KEY (`id`)
+) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 
-ALTER TABLE `ATTEMPTS` ADD FOREIGN KEY (`test_id`) REFERENCES `TESTS` (`id`);
+-- CreateTable
+CREATE TABLE `feedbacks` (
+    `id` VARCHAR(191) NOT NULL,
+    `content` VARCHAR(191) NOT NULL,
+    `createdAt` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3),
+    `updatedAt` DATETIME(3) NOT NULL,
+    `deleted` BOOLEAN NOT NULL DEFAULT false,
+    `questionId` VARCHAR(191) NOT NULL,
+    `userId` VARCHAR(191) NOT NULL,
 
-ALTER TABLE `ATTEMPTS` ADD FOREIGN KEY (`status_id`) REFERENCES `ATTEMPT_STATUS` (`id`);
+    UNIQUE INDEX `feedbacks_questionId_key`(`questionId`),
+    PRIMARY KEY (`id`)
+) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 
-ALTER TABLE `ATTEMPT_CHOICES` ADD FOREIGN KEY (`attempt_id`) REFERENCES `ATTEMPTS` (`id`);
+-- AddForeignKey
+ALTER TABLE `configs` ADD CONSTRAINT `configs_userId_fkey` FOREIGN KEY (`userId`) REFERENCES `users`(`id`) ON DELETE RESTRICT ON UPDATE CASCADE;
 
-ALTER TABLE `ATTEMPT_CHOICES` ADD FOREIGN KEY (`choice_id`) REFERENCES `CHOICES` (`id`);
+-- AddForeignKey
+ALTER TABLE `favorites` ADD CONSTRAINT `favorites_questionId_fkey` FOREIGN KEY (`questionId`) REFERENCES `questions`(`id`) ON DELETE SET NULL ON UPDATE CASCADE;
 
-ALTER TABLE `QUESTIONS` ADD FOREIGN KEY (`test_id`) REFERENCES `TESTS` (`id`);
+-- AddForeignKey
+ALTER TABLE `favorites` ADD CONSTRAINT `favorites_userId_fkey` FOREIGN KEY (`userId`) REFERENCES `users`(`id`) ON DELETE RESTRICT ON UPDATE CASCADE;
 
-ALTER TABLE `CHOICES` ADD FOREIGN KEY (`question_id`) REFERENCES `QUESTIONS` (`id`);
+-- AddForeignKey
+ALTER TABLE `tests` ADD CONSTRAINT `tests_testSourceId_fkey` FOREIGN KEY (`testSourceId`) REFERENCES `test_sources`(`id`) ON DELETE RESTRICT ON UPDATE CASCADE;
 
-ALTER TABLE `FEEDBACKS` ADD FOREIGN KEY (`user_id`) REFERENCES `USERS` (`id`);
+-- AddForeignKey
+ALTER TABLE `attempts` ADD CONSTRAINT `attempts_userId_fkey` FOREIGN KEY (`userId`) REFERENCES `users`(`id`) ON DELETE RESTRICT ON UPDATE CASCADE;
 
-ALTER TABLE `FEEDBACKS` ADD FOREIGN KEY (`question_id`) REFERENCES `QUESTIONS` (`id`);
+-- AddForeignKey
+ALTER TABLE `attempts` ADD CONSTRAINT `attempts_testId_fkey` FOREIGN KEY (`testId`) REFERENCES `tests`(`id`) ON DELETE RESTRICT ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE `questions` ADD CONSTRAINT `questions_testId_fkey` FOREIGN KEY (`testId`) REFERENCES `tests`(`id`) ON DELETE RESTRICT ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE `choices` ADD CONSTRAINT `choices_questionId_fkey` FOREIGN KEY (`questionId`) REFERENCES `questions`(`id`) ON DELETE RESTRICT ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE `feedbacks` ADD CONSTRAINT `feedbacks_questionId_fkey` FOREIGN KEY (`questionId`) REFERENCES `questions`(`id`) ON DELETE RESTRICT ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE `feedbacks` ADD CONSTRAINT `feedbacks_userId_fkey` FOREIGN KEY (`userId`) REFERENCES `users`(`id`) ON DELETE RESTRICT ON UPDATE CASCADE;

@@ -1,85 +1,147 @@
-Table USERS {
-  id int [pk, increment] // auto-increment
-  role_id int [not null, ref: > ROLES.id]
-  username nvarchar(255)
-  email varchar(50) [unique]
-  password varchar(100)
-  avatar varchar(255)
-  created_at datetime [default: `getdate()`]
-  updated_at datetime [default: `getdate()`]
-  is_active bit [default: 1]
+//// ------------------------------------------------------
+//// THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
+//// ------------------------------------------------------
+
+Table User {
+  id String [pk]
+  email String [unique, not null]
+  password String [not null]
+  username String
+  avatar String
+  createdAt DateTime [default: `now()`, not null]
+  updatedAt DateTime [not null]
+  active Boolean [not null, default: true]
+  config Config
+  favorites Favorite [not null]
+  attempts Attempt [not null]
+  feedbacks Feedback [not null]
+  role Role [not null, default: 'USER']
 }
 
-Table CONFIGS {
-  id int [pk, increment]
-  user_id int [not null, ref: - USERS.id]
-  config_file varchar(255)
+Table Config {
+  id String [pk]
+  files String [not null]
+  user User [not null]
+  userId String [unique, not null]
 }
 
-Table FAVORITES {
-  id int [pk, increment]
-  user_id int [not null, ref: > USERS.id]
-  question_id int [not null, ref: - QUESTIONS.id]
-  note nvarchar(255)
+Table Favorite {
+  id String [pk]
+  note String
+  question Question
+  questionId String [unique]
+  user User [not null]
+  userId String [not null]
 }
 
-Table ROLES {
-  id int [pk, increment]
-  name nvarchar(255)
+Table Test {
+  id String [pk]
+  title String [not null]
+  score Int [not null]
+  duration Int [not null]
+  createdAt DateTime [default: `now()`, not null]
+  updatedAt DateTime [not null]
+  deleted Boolean [not null, default: false]
+  testCategory TestCategory [not null]
+  testSkill TestSkill [not null]
+  attempts Attempt [not null]
+  questions Question [not null]
+  testSource TestSource [not null]
+  testSourceId String [not null]
 }
 
-Table TESTS {
-  id int [pk, increment]
-  title varchar(255)
-  score int
-  slug varchar(255)
-  duration int
-  created_at datetime [default: `getdate()`]
-  updated_at datetime [default: `getdate()`]
-  is_deleted bit [default: 0]
+Table TestSource {
+  id String [pk]
+  name String [unique, not null]
+  tests Test [not null]
 }
 
-Table ATTEMPTS {
-  id int [pk, increment]
-  user_id int [not null, ref: > USERS.id]
-  test_id int [not null, ref: > TESTS.id]
-  status_id int [not null, ref: > ATTEMPT_STATUS.id]
-  score int
-  created_at datetime [default: `getdate()`]
-  updated_at datetime [default: `getdate()`]
-  is_deleted bit [default: 0]
+Table Attempt {
+  id String [pk]
+  score Int [not null]
+  status AttemptStatus [not null, default: 'NONE']
+  createdAt DateTime [default: `now()`, not null]
+  updatedAt DateTime [not null]
+  deleted Boolean [not null, default: false]
+  user User [not null]
+  userId String [not null]
+  test Test [not null]
+  testId String [not null]
 }
 
-Table ATTEMPT_CHOICES {
-  id int [pk, increment]
-  attempt_id int [not null, ref: > ATTEMPTS.id]
-  choice_id int [not null, ref: > CHOICES.id]
+Table Question {
+  id String [pk]
+  content String [not null]
+  favorite Favorite
+  feedback Feedback
+  test Test [not null]
+  testId String [not null]
+  choices Choice [not null]
 }
 
-Table ATTEMPT_STATUS {
-  id int [pk, increment]
-  name varchar(255)
+Table Choice {
+  id String [pk]
+  content String [not null]
+  question Question [not null]
+  questionId String [not null]
 }
 
-Table QUESTIONS {
-  id int [pk, increment]
-  test_id int [not null, ref: > TESTS.id]
-  content varchar(255)
+Table Feedback {
+  id String [pk]
+  content String [not null]
+  createdAt DateTime [default: `now()`, not null]
+  updatedAt DateTime [not null]
+  deleted Boolean [not null, default: false]
+  question Question [not null]
+  questionId String [unique, not null]
+  user User [not null]
+  userId String [not null]
 }
 
-Table CHOICES {
-  id int [pk, increment]
-  question_id int [not null, ref: > QUESTIONS.id]
-  content nvarchar(255)
-  is_correct bit
+Enum Role {
+  ADMIN
+  USER
 }
 
-Table FEEDBACKS {
-  id int [pk, increment]
-  user_id int [not null, ref: > USERS.id]
-  question_id int [not null, ref: - QUESTIONS.id]
-  content nvarchar(255)
-  created_at datetime [default: `getdate()`]
-  updated_at datetime [default: `getdate()`]
-  is_deleted bit [default: 0]
+Enum AttemptStatus {
+  NONE
+  INPROGRESS
+  FINISHED
+  ABANDONED
 }
+
+Enum TestCategory {
+  PART1
+  PART2
+  PART3
+  PART4
+  PART5
+  PART6
+  PART7
+  FULLTEST
+}
+
+Enum TestSkill {
+  LISTENING
+  READING
+}
+
+Ref: Config.userId - User.id
+
+Ref: Favorite.questionId - Question.id
+
+Ref: Favorite.userId > User.id
+
+Ref: Test.testSourceId > TestSource.id
+
+Ref: Attempt.userId > User.id
+
+Ref: Attempt.testId > Test.id
+
+Ref: Question.testId > Test.id
+
+Ref: Choice.questionId > Question.id
+
+Ref: Feedback.questionId - Question.id
+
+Ref: Feedback.userId > User.id

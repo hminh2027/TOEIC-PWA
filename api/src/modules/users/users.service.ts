@@ -12,24 +12,27 @@ import { exclude } from 'src/common/utils/exclude';
 import { Prisma, Role, User } from '@prisma/client';
 import { SignupInput } from '../auth/dto/signup.input';
 import { hashPassword } from 'src/common/utils/hash';
+import { UserModel } from './models/user.model';
+import { LoginInput } from '../auth/dto/login.input';
 
 @Injectable()
 export class UsersService {
   constructor(private prisma: PrismaService) {}
 
-  async getUsers(): Promise<string> {
-    return 'user';
+  async getByUserId(id: string): Promise<UserModel> {
+    const user = await this.prisma.user.findUnique({ where: { id } });
+    return exclude(user, 'password');
   }
 
-  async getByEmail(email: string): Promise<any> {
+  async getByEmail(email: string): Promise<UserModel> {
     const user = await this.prisma.user.findUnique({ where: { email } });
     return exclude(user, 'password');
   }
 
-  async getByEmailAndPassword(email: string, password: string): Promise<User> {
-    const hashedPass = hashPassword(password);
+  async getByEmailAndPassword(payload: LoginInput): Promise<User> {
+    const hashedPass = hashPassword(payload.password);
     return await this.prisma.user.findFirst({
-      where: { email, password: hashedPass },
+      where: { email: payload.email, password: hashedPass },
     });
   }
 

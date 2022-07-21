@@ -8,6 +8,9 @@ import { JwtStrategy } from './strategies/jwt.strategy';
 import { SecurityConfig } from 'src/common/configs/config.interface';
 import { AuthController } from './auth.controller';
 import { UsersModule } from '../users/users.module';
+import { GoogleService } from './google.service';
+import { GoogleAuthGuard } from 'src/common/guards/google.guard';
+import { GoogleStrategy } from './strategies/google.strategy';
 
 @Module({
   imports: [
@@ -27,7 +30,14 @@ import { UsersModule } from '../users/users.module';
     UsersModule,
   ],
   controllers: [AuthController],
-  providers: [AuthService, JwtStrategy, JwtAuthGuard],
-  exports: [JwtAuthGuard],
+  providers: [
+    AuthService,
+    GoogleService,
+    JwtStrategy,
+    GoogleStrategy,
+    GoogleAuthGuard,
+    JwtAuthGuard,
+  ],
+  exports: [PassportModule.register({ defaultStrategy: 'jwt' })],
 })
 export class AuthModule {}

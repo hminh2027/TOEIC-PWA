@@ -16,8 +16,11 @@ const config: Config = {
     path: 'api/docs',
   },
   security: {
-    expiresIn: '2m',
+    expiresIn: '1h',
     refreshIn: '60d',
+  },
+  redis: {
+    uri: 'REDIS_URI=redis://localhost:6379',
   },
 };
 

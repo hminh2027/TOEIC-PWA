@@ -7,11 +7,6 @@ export enum PostOrderField {
   content = 'content',
 }
 
-// registerEnumType(PostOrderField, {
-//   name: 'PostOrderField',
-//   description: 'Properties by which post connections can be ordered.',
-// });
-
 export class PostOrder {
   field: PostOrderField;
 }

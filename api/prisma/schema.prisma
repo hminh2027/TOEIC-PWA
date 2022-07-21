@@ -48,8 +48,8 @@ model Favorite {
   question    Question? @relation(fields: [questionId], references: [id])
   questionId  String?   @unique
   //  N-1
-  user        User?     @relation(fields: [userId], references: [id])
-  userId      String?   @unique 
+  user        User     @relation(fields: [userId], references: [id])
+  userId      String
 }
 
 model Test {
@@ -57,14 +57,26 @@ model Test {
   id          String    @id @default(cuid())
   title       String
   score       Int
-  slug        String
   duration    Int
   createdAt   DateTime  @default(now())
   updatedAt   DateTime  @updatedAt
   deleted     Boolean   @default(false)
+  testCategory TestCategory
+  testSkill   TestSkill
   //  1-N
   attempts    Attempt[]
   questions   Question[]
+  //  N-1
+  testSource  TestSource @relation(fields: [testSourceId], references: [id])
+  testSourceId String     
+}
+
+model TestSource {
+  @@map("test_sources")
+  id          String    @id @default(cuid())
+  name        String     @unique
+  // 1-N
+  tests       Test[]
 }
 
 model Attempt {
@@ -76,10 +88,10 @@ model Attempt {
   updatedAt   DateTime  @updatedAt
   deleted     Boolean   @default(false)
   //  N-1
-  user        User?     @relation(fields: [userId], references: [id])
-  userId      String?   @unique
-  test        Test?     @relation(fields: [testId], references: [id])
-  testId      String?   @unique
+  user        User     @relation(fields: [userId], references: [id])
+  userId      String
+  test        Test     @relation(fields: [testId], references: [id])
+  testId      String
 }
 
 model Question {
@@ -88,10 +100,10 @@ model Question {
   content     String
   //  1-1
   favorite    Favorite?
-  //  N-1
-  test        Test?     @relation(fields: [testId], references: [id])
-  testId      String?   @unique
   feedback    Feedback?
+  //  N-1
+  test        Test     @relation(fields: [testId], references: [id])
+  testId      String   
   //  1-N
   choices     Choice[]
 }
@@ -101,8 +113,8 @@ model Choice {
   id          String    @id @default(cuid())
   content     String
   //  N-1
-  question    Question? @relation(fields: [questionId], references: [id])
-  questionId  String?   @unique
+  question    Question @relation(fields: [questionId], references: [id])
+  questionId  String   
 }
 
 model Feedback {
@@ -116,8 +128,8 @@ model Feedback {
   question    Question  @relation(fields: [questionId], references: [id])
   questionId  String    @unique
   //  N-1
-  user        User?     @relation(fields: [userId], references: [id])
-  userId      String?   @unique
+  user        User     @relation(fields: [userId], references: [id])
+  userId      String   
 }
 
 enum Role {
@@ -130,4 +142,20 @@ enum AttemptStatus {
   INPROGRESS
   FINISHED
   ABANDONED
+}
+
+enum TestCategory {
+  PART1
+  PART2
+  PART3
+  PART4
+  PART5
+  PART6
+  PART7
+  FULLTEST
+}
+
+enum TestSkill {
+  LISTENING
+  READING
 }
