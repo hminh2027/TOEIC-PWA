@@ -38,7 +38,6 @@ Table Test {
   id String [pk]
   title String [not null]
   score Int [not null]
-  slug String [not null]
   duration Int [not null]
   createdAt DateTime [default: `now()`, not null]
   updatedAt DateTime [not null]
@@ -64,9 +63,9 @@ Table Question {
   id String [pk]
   content String [not null]
   favorite Favorite
+  feedback Feedback
   test Test
   testId String [unique]
-  feedback Feedback
   choices Choice [not null]
 }
 

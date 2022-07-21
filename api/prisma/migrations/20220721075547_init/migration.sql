@@ -39,9 +39,8 @@ CREATE TABLE `favorites` (
 -- CreateTable
 CREATE TABLE `tests` (
     `id` VARCHAR(191) NOT NULL,
-    `title` VARCHAR(191) NULL,
+    `title` VARCHAR(191) NOT NULL,
     `score` INTEGER NOT NULL,
-    `slug` VARCHAR(191) NOT NULL,
     `duration` INTEGER NOT NULL,
     `createdAt` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3),
     `updatedAt` DATETIME(3) NOT NULL,
@@ -53,14 +52,11 @@ CREATE TABLE `tests` (
 -- CreateTable
 CREATE TABLE `attempts` (
     `id` VARCHAR(191) NOT NULL,
-    `title` VARCHAR(191) NULL,
     `score` INTEGER NOT NULL,
-    `slug` VARCHAR(191) NOT NULL,
-    `duration` INTEGER NOT NULL,
+    `status` ENUM('NONE', 'INPROGRESS', 'FINISHED', 'ABANDONED') NOT NULL DEFAULT 'NONE',
     `createdAt` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3),
     `updatedAt` DATETIME(3) NOT NULL,
     `deleted` BOOLEAN NOT NULL DEFAULT false,
-    `status` ENUM('NONE', 'INPROGRESS', 'FINISHED', 'ABANDONED') NOT NULL DEFAULT 'NONE',
     `userId` VARCHAR(191) NULL,
     `testId` VARCHAR(191) NULL,
 
