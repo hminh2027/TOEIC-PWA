@@ -1,54 +1,47 @@
-import { PrismaClient } from '@prisma/client';
+import { PrismaClient, Role } from '@prisma/client';
 
 const prisma = new PrismaClient();
 
 async function main() {
   await prisma.user.deleteMany();
-  await prisma.post.deleteMany();
 
   console.log('Seeding...');
-
+  console.log('Start seeding users');
   const user1 = await prisma.user.create({
     data: {
-      email: 'lisa@simpson.com',
-      firstname: 'Lisa',
-      lastname: 'Simpson',
-      password: '$2b$10$EpRnTzVlqHNP0.fUbXUwSOyuiXe/QLSUG6xNekdHgTGmrpHEfIoxm', // secret42
-      // role: 'USER',
-      posts: {
-        create: {
-          title: 'Join us for Prisma Day 2019 in Berlin',
-          content: 'https://www.prisma.io/day/',
-          published: true,
-        },
-      },
+      email: 'admin@gmail.com',
+      username: 'admin',
+      password:
+        '6dc10cfa72771ab641611005cad7d4da1acfcaa613921e67982e9ccf7503b66c',
+      avatar: '',
+      role: Role.ADMIN,
     },
   });
   const user2 = await prisma.user.create({
     data: {
-      email: 'bart@simpson.com',
-      firstname: 'Bart',
-      lastname: 'Simpson',
-      // role: 'ADMIN',
-      password: '$2b$10$EpRnTzVlqHNP0.fUbXUwSOyuiXe/QLSUG6xNekdHgTGmrpHEfIoxm', // secret42
-      posts: {
-        create: [
-          {
-            title: 'Subscribe to GraphQL Weekly for community news',
-            content: 'https://graphqlweekly.com/',
-            published: true,
-          },
-          {
-            title: 'Follow Prisma on Twitter',
-            content: 'https://twitter.com/prisma',
-            published: false,
-          },
-        ],
-      },
+      email: 'user@gmail.com',
+      username: 'user',
+      password:
+        '6dc10cfa72771ab641611005cad7d4da1acfcaa613921e67982e9ccf7503b66c',
+      avatar: '',
+      role: Role.USER,
     },
   });
 
   console.log({ user1, user2 });
+
+  console.log('Start seeding test sources');
+  const source = await prisma.testSource.createMany({
+    data: [
+      { name: 'ETC 2020' },
+      { name: 'ETC 2021' },
+      { name: 'ETC 2022' },
+      { name: 'Economy 2018' },
+    ],
+  });
+
+  console.log(source);
+  console.log('Finished seeding');
 }
 
 main()

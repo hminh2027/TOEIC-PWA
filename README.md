@@ -8,7 +8,7 @@ Tech stacks:
 - cache: redis
 - deploy: docker
 
-Requirements:
+Features:
 - login/logout (lưu setting người dùng & thông tin)
 - quản trị 
   - thông tin tài khoản user

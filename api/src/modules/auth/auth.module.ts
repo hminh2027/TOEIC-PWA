@@ -2,11 +2,15 @@ import { Module } from '@nestjs/common';
 import { JwtModule } from '@nestjs/jwt';
 import { PassportModule } from '@nestjs/passport';
 import { ConfigService } from '@nestjs/config';
-import { PasswordService } from './password.service';
-import { GqlAuthGuard } from './gql-auth.guard';
+import { JwtAuthGuard } from '../../common/guards/jwt.guard';
 import { AuthService } from './auth.service';
-import { JwtStrategy } from './jwt.strategy';
+import { JwtStrategy } from './strategies/jwt.strategy';
 import { SecurityConfig } from 'src/common/configs/config.interface';
+import { AuthController } from './auth.controller';
+import { UsersModule } from '../users/users.module';
+import { GoogleService } from './google.service';
+import { GoogleAuthGuard } from 'src/common/guards/google.guard';
+import { GoogleStrategy } from './strategies/google.strategy';
 
 @Module({
   imports: [
@@ -23,8 +27,17 @@ import { SecurityConfig } from 'src/common/configs/config.interface';
       },
       inject: [ConfigService],
     }),
+    UsersModule,
   ],
-  providers: [AuthService, JwtStrategy, GqlAuthGuard, PasswordService],
-  exports: [GqlAuthGuard],
+  controllers: [AuthController],
+  providers: [
+    AuthService,
+    GoogleService,
+    JwtStrategy,
+    GoogleStrategy,
+    GoogleAuthGuard,
+    JwtAuthGuard,
+  ],
+  exports: [PassportModule.register({ defaultStrategy: 'jwt' })],
 })
 export class AuthModule {}

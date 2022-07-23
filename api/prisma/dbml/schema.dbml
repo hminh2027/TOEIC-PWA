@@ -4,24 +4,144 @@
 
 Table User {
   id String [pk]
-  createdAt DateTime [default: `now()`, not null]
-  updatedAt DateTime [not null]
   email String [unique, not null]
   password String [not null]
-  firstname String
-  lastname String
-  posts Post [not null]
-}
-
-Table Post {
-  id String [pk]
+  username String
+  avatar String
   createdAt DateTime [default: `now()`, not null]
   updatedAt DateTime [not null]
-  published Boolean [not null]
-  title String [not null]
-  content String
-  author User
-  authorId String
+  active Boolean [not null, default: true]
+  config Config
+  favorites Favorite [not null]
+  attempts Attempt [not null]
+  feedbacks Feedback [not null]
+  role Role [not null, default: 'USER']
 }
 
-Ref: Post.authorId > User.id
+Table Config {
+  id String [pk]
+  files String [not null]
+  user User [not null]
+  userId String [unique, not null]
+}
+
+Table Favorite {
+  id String [pk]
+  note String
+  question Question
+  questionId String [unique]
+  user User [not null]
+  userId String [not null]
+}
+
+Table Test {
+  id String [pk]
+  title String [not null]
+  score Int [not null]
+  duration Int [not null]
+  createdAt DateTime [default: `now()`, not null]
+  updatedAt DateTime [not null]
+  deleted Boolean [not null, default: false]
+  testCategory TestCategory [not null]
+  testSkill TestSkill [not null]
+  attempts Attempt [not null]
+  questions Question [not null]
+  testSource TestSource [not null]
+  testSourceId String [not null]
+}
+
+Table TestSource {
+  id String [pk]
+  name String [unique, not null]
+  tests Test [not null]
+}
+
+Table Attempt {
+  id String [pk]
+  score Int [not null]
+  status AttemptStatus [not null, default: 'NONE']
+  createdAt DateTime [default: `now()`, not null]
+  updatedAt DateTime [not null]
+  deleted Boolean [not null, default: false]
+  user User [not null]
+  userId String [not null]
+  test Test [not null]
+  testId String [not null]
+}
+
+Table Question {
+  id String [pk]
+  content String [not null]
+  favorite Favorite
+  feedback Feedback
+  test Test [not null]
+  testId String [not null]
+  choices Choice [not null]
+}
+
+Table Choice {
+  id String [pk]
+  content String [not null]
+  question Question [not null]
+  questionId String [not null]
+}
+
+Table Feedback {
+  id String [pk]
+  content String [not null]
+  createdAt DateTime [default: `now()`, not null]
+  updatedAt DateTime [not null]
+  deleted Boolean [not null, default: false]
+  question Question [not null]
+  questionId String [unique, not null]
+  user User [not null]
+  userId String [not null]
+}
+
+Enum Role {
+  ADMIN
+  USER
+}
+
+Enum AttemptStatus {
+  NONE
+  INPROGRESS
+  FINISHED
+  ABANDONED
+}
+
+Enum TestCategory {
+  PART1
+  PART2
+  PART3
+  PART4
+  PART5
+  PART6
+  PART7
+  FULLTEST
+}
+
+Enum TestSkill {
+  LISTENING
+  READING
+}
+
+Ref: Config.userId - User.id
+
+Ref: Favorite.questionId - Question.id
+
+Ref: Favorite.userId > User.id
+
+Ref: Test.testSourceId > TestSource.id
+
+Ref: Attempt.userId > User.id
+
+Ref: Attempt.testId > Test.id
+
+Ref: Question.testId > Test.id
+
+Ref: Choice.questionId > Question.id
+
+Ref: Feedback.questionId - Question.id
+
+Ref: Feedback.userId > User.id
