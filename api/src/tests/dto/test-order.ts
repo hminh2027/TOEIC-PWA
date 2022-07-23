@@ -1,4 +1,4 @@
-export enum PostOrderField {
+export enum TestOrderField {
   id = 'id',
   createdAt = 'createdAt',
   updatedAt = 'updatedAt',
@@ -7,6 +7,6 @@ export enum PostOrderField {
   content = 'content',
 }
 
-export class PostOrder {
-  field: PostOrderField;
+export class TestOrder {
+  field: TestOrderField;
 }
