@@ -70,9 +70,9 @@ async function bootstrap() {
   }
 
   // Redis
-  const redisIoAdapter: any = new RedisIoAdapter(configService);
-  await redisIoAdapter.connectToRedis();
-  app.useWebSocketAdapter(redisIoAdapter);
+  // const redisIoAdapter: any = new RedisIoAdapter(configService);
+  // await redisIoAdapter.connectToRedis();
+  // app.useWebSocketAdapter(redisIoAdapter);
 
   await app.listen(process.env.PORT || nestConfig.port || 3000);
 
