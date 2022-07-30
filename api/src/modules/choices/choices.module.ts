@@ -4,6 +4,6 @@ import { ChoicesController } from './choices.controller';
 
 @Module({
   controllers: [ChoicesController],
-  providers: [ChoicesService]
+  providers: [ChoicesService],
 })
 export class ChoicesModule {}
