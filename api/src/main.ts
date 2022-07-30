@@ -26,9 +26,10 @@ async function bootstrap() {
       transform: true,
       stopAtFirstError: true,
       exceptionFactory: (validationError: ValidationError[]) => {
-        const errors = validationError.map((err) => ({
-          [err.property]: Object.values(err.constraints)[0],
-        }));
+        const errors = {};
+        validationError.map(
+          (err) => (errors[err.property] = Object.values(err.constraints)[0]),
+        );
         return new BadRequestException(errors);
       },
     }),
