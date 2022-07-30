@@ -21,10 +21,15 @@ Features:
   - thời gian học
   - phổ điểm từng part
 - lưu câu hỏi yêu thích và chú thích
-- lưu và quản lý vocab
-- tích hợp từ điển
 - feedback câu hỏi
 - chức năng giải đề
+
+Extend features:
+- lưu và quản lý vocab
+- tích hợp từ điển
+- notification
+- luợt hoàn thành bài + rating đề + điểm trung bình (public)
+- suggest đề cho admin (hoặc upload tự do khi tích hợp AI)
 
 Database design: ![Database](database/TOEIC.png)
 Detail System design: ...
