@@ -22,7 +22,12 @@ const SideBarMenu = () => {
           <MenuList />
         </div>
         <button onClick={() => console.log('clicked')}>
-          <MenuItem label='Logout' icon={<MdOutlineLogout />} path={'/'} />
+          <MenuItem
+            isActive={false}
+            label='Logout'
+            icon={<MdOutlineLogout />}
+            path={'/'}
+          />
         </button>
       </div>
     </div>
