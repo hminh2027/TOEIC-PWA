@@ -1,10 +1,15 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { IsEmail, IsNotEmpty, Matches } from 'class-validator';
+import { Match } from '../../../common/decorators/match.decorator';
 
 export class SignupInput {
   @ApiProperty({ default: 'test@gmail.com' })
   @IsEmail()
   email: string;
+
+  @ApiProperty({ default: 'Jackie Chan' })
+  @IsNotEmpty()
+  username: string;
 
   @ApiProperty({ default: 'Pass123!' })
   @IsNotEmpty()
@@ -16,6 +21,8 @@ export class SignupInput {
   )
   password: string;
 
-  @ApiProperty({ default: 'Jackie Chan' })
-  username?: string;
+  @ApiProperty({ default: 'Pass123!' })
+  @IsNotEmpty()
+  @Match('password', { message: 'password does not match' })
+  password2: string;
 }
