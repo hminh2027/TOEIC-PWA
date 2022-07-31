@@ -1,9 +1,9 @@
 import {
+  BadRequestException,
   Body,
   Controller,
   Get,
   HttpStatus,
-  NotFoundException,
   Post,
   UseGuards,
   UsePipes,
@@ -58,7 +58,7 @@ export class AuthController {
   // Note: Set refresh token to cookie in response's header
   async login(@Body() payload: LoginInput): Promise<ResponseObject> {
     const user = await this.usersService.getByEmailAndPassword(payload);
-    if (!user) throw new NotFoundException('Wrong email or password!');
+    if (!user) throw new BadRequestException('Wrong email or password!');
 
     return {
       statusCode: HttpStatus.OK,

@@ -38,6 +38,10 @@
         text-decoration: none;
     }
 
+    html, body, #__next {
+        height: 100%;
+    }
+
     * {
         box-sizing: border-box;
         letter-spacing: 1px;
@@ -47,13 +51,13 @@
 
     ::-moz-selection {
         /* Code for Firefox */
-        color: black;
-        background: #cdf0ea;
+        color: white;
+        background: #3B3086;
     }
 
     ::selection {
-        color: black;
-        background: #cdf0ea;
+        color: white;
+        background: #3B3086;
     }
 
 
@@ -101,6 +105,27 @@
     /* Class to adjust with sticky footer */
     .min-h-main {
         @apply min-h-[calc(100vh-56px)];
+    }
+}
+
+@layer components {
+    .tw-btn {
+        @apply w-full transition-all duration-300 hover:bg-[#bcece4] p-4 font-bold text-white rounded-xl bg-[#3B3086];
+    }
+    .tw-input {
+        @apply font-bold transition-all duration-200 text-sm w-full p-4 outline-none border-0 rounded-xl focus:ring focus:ring-[#3B3086] focus:outline-none
+    }
+    .tw-input-err {
+        @apply tw-input bg-[#f4b6be] focus:ring-[#f02849]
+    }
+    .v-textarea {
+        @apply resize-none textarea textarea-accent focus:outline-none;
+    }
+    .tw-menu-item {
+        @apply flex-col justify-center items-center cursor-pointer flex hover:bg-[#f7f3ff] hover:text-[#7B3C9F] my-4 py-4 px-2 rounded-2xl lg:flex-row lg:justify-start lg:flex-grow-0 lg:text-lg;
+    }
+    .tw-menu-item-active {
+        @apply tw-menu-item bg-[#f7f3ff] text-[#7B3C9F];
     }
 }
 

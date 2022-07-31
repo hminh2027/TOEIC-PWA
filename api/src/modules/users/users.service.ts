@@ -38,6 +38,7 @@ export class UsersService {
 
   async createUser(payload: SignupInput): Promise<any> {
     const hashedPass = hashPassword(payload.password);
+    if (payload.password2) exclude(payload, 'password2');
     try {
       return await this.prisma.user.create({
         data: {

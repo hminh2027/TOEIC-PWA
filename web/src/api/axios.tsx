@@ -15,14 +15,10 @@ const HEADERS_MUlTIPLE_PART = {
   Accept: 'multipart/form-data',
 };
 
-const BASE_URL = process.env.API_URL;
+const BASE_URL = process.env.NEXT_PUBLIC_API_URL;
 
 export const getURL = (url: string) => {
-  if (url.startsWith('http')) {
-    return url;
-  } else if (url.startsWith('https')) {
-    return url;
-  }
+  if (url.startsWith('http') || url.startsWith('https')) return url;
   return BASE_URL + url;
 };
 
