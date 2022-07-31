@@ -108,7 +108,7 @@ const SignupPage = () => {
         {/* register */}
         <div className='text-center my-4'>
           Already have an account?
-          <Link href='signup'>
+          <Link href='login'>
             <a className='text-blue-600'> Log in now</a>
           </Link>
         </div>

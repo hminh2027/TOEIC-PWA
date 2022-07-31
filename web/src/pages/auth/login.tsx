@@ -39,7 +39,7 @@ const LoginPage = () => {
   return (
     <div className='bg-[#f3eef2] h-full flex flex-col justify-center'>
       {/* container */}
-      <div className='flex flex-col justify-between mx-6 bg-[#f3eef2]'>
+      <div className='flex flex-col justify-between mx-6 lg:w-1/3 lg:mx-auto bg-[#f3eef2]'>
         {/* heading */}
         <div className='h1 text-center my-4'>Login</div>
         {/* form */}

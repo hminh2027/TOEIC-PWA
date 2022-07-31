@@ -11,6 +11,7 @@ export default function HomePage() {
   return (
     <Layout>
       {/* <Seo templateTitle='Home' /> */}
+      welcome to home page
       <Seo />
     </Layout>
   );

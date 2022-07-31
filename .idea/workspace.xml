@@ -2,31 +2,16 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="546f445a-a710-4931-bc33-6a1c26f45016" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/web/.env.local" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/api/src/main.ts" beforeDir="false" afterPath="$PROJECT_DIR$/api/src/main.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/api/src/modules/auth/auth.controller.ts" beforeDir="false" afterPath="$PROJECT_DIR$/api/src/modules/auth/auth.controller.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/api/src/modules/auth/dto/signup.input.ts" beforeDir="false" afterPath="$PROJECT_DIR$/api/src/modules/auth/dto/signup.input.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/api/src/modules/users/users.service.ts" beforeDir="false" afterPath="$PROJECT_DIR$/api/src/modules/users/users.service.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/web/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/web/package-lock.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/web/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/web/package.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/web/public/images/large-og.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/web/public/images/new-tab.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/web/src/api/axios.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/web/src/api/axios.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/web/src/components/NextImage.tsx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/web/src/components/Skeleton.tsx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/web/src/components/buttons/Button.tsx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/api/test/app.resolver.e2e-spec.ts" beforeDir="false" afterPath="$PROJECT_DIR$/api/test/app.resolver.e2e-spec.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/commitlint.config.js" beforeDir="false" afterPath="$PROJECT_DIR$/web/commitlint.config.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/src/components/layout/Header.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/web/src/components/layout/Header.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/web/src/components/layout/Layout.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/web/src/components/layout/Layout.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/web/src/components/links/ArrowLink.tsx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/web/src/components/links/ButtonLink.tsx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/web/src/components/links/PrimaryLink.tsx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/web/src/components/links/UnderlineLink.tsx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/web/src/components/links/UnstyledLink.tsx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/web/src/pages/404.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/web/src/pages/404.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/src/pages/auth/index.tsx" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/web/src/pages/auth/login.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/web/src/pages/auth/login.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/web/src/pages/components.tsx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/src/pages/auth/signup.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/web/src/pages/auth/signup.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/web/src/pages/index.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/web/src/pages/index.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/web/src/styles/colors.css" beforeDir="false" afterPath="$PROJECT_DIR$/web/src/styles/colors.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/src/styles/colors.css" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/web/src/styles/globals.css" beforeDir="false" afterPath="$PROJECT_DIR$/web/src/styles/globals.css" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/web/tailwind.config.js" beforeDir="false" afterPath="$PROJECT_DIR$/web/tailwind.config.js" afterDir="false" />
     </list>
@@ -38,8 +23,8 @@
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
-        <option value="TypeScript JSX File" />
         <option value="TypeScript File" />
+        <option value="TypeScript JSX File" />
       </list>
     </option>
   </component>
@@ -70,7 +55,7 @@
     <property name="node.js.selected.package.tslint" value="(autodetect)" />
     <property name="nodejs_package_manager_path" value="npm" />
     <property name="prettierjs.PrettierConfiguration.Package" value="D:\Project Web\Project Web\Project 23 (Toeic App)\api\node_modules\prettier" />
-    <property name="settings.editor.selected.configurable" value="settings.javascript.prettier" />
+    <property name="settings.editor.selected.configurable" value="preferences.pluginManager" />
     <property name="ts.external.directory.path" value="D:\Project Web\Project Web\Project 23 (Toeic App)\web\node_modules\typescript\lib" />
     <property name="vue.rearranger.settings.migration" value="true" />
   </component>
@@ -96,7 +81,8 @@
       <workItem from="1659180652927" duration="1302000" />
       <workItem from="1659182104063" duration="1842000" />
       <workItem from="1659183988779" duration="247000" />
-      <workItem from="1659188254591" duration="14080000" />
+      <workItem from="1659188254591" duration="15845000" />
+      <workItem from="1659234186675" duration="14143000" />
     </task>
     <servers />
   </component>
