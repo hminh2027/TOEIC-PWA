@@ -5,8 +5,8 @@ import { AuthModule } from 'src/modules/auth/auth.module';
 import { UsersModule } from 'src/modules/users/users.module';
 import config from 'src/common/configs/config';
 import { loggingMiddleware } from 'src/common/middleware/logging.middleware';
-import { QuestionsModule } from './questions/questions.module';
-import { TestsModule } from './tests/tests.module';
+import { QuestionsModule } from './modules/questions/questions.module';
+import { TestsModule } from './modules/tests/tests.module';
 
 @Module({
   imports: [

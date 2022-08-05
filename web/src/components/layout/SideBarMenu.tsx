@@ -8,8 +8,8 @@ import MenuItem from '@/components/layout/MenuItem';
 const SideBarMenu = () => {
   return (
     <div className='flex border-r-2'>
-      <div className='flex flex-col justify-between mx-12'>
-        <a className='flex py-10 mx-auto' href='#'>
+      <div className='mx-12 flex flex-col justify-between'>
+        <a className='mx-auto flex py-10' href='#'>
           <Image
             className='object-contain '
             width={150}

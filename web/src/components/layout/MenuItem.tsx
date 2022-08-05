@@ -12,8 +12,8 @@ const MenuItem = ({ icon, label, path, isActive }: MenuItemProps) => {
   return (
     <Link href={path}>
       <li className={isActive ? 'tw-menu-item-active' : 'tw-menu-item'}>
-        <div className='flex items-center text-3xl px-6'>{icon}</div>
-        <div className='capitalize mr-20'>{label}</div>
+        <div className='flex items-center px-6 text-3xl'>{icon}</div>
+        <div className='mr-20 capitalize'>{label}</div>
       </li>
     </Link>
   );

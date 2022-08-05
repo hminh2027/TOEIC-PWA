@@ -37,11 +37,11 @@ const LoginPage = () => {
   };
 
   return (
-    <div className='bg-[#f3eef2] h-full flex flex-col justify-center'>
+    <div className='flex h-full flex-col justify-center bg-[#f3eef2]'>
       {/* container */}
-      <div className='flex flex-col justify-between mx-6 lg:w-1/3 lg:mx-auto bg-[#f3eef2]'>
+      <div className='mx-6 flex flex-col justify-between bg-[#f3eef2] lg:mx-auto lg:w-1/3'>
         {/* heading */}
-        <div className='h1 text-center my-4'>Login</div>
+        <div className='h1 my-4 text-center'>Login</div>
         {/* form */}
         <div>
           <div className='my-4'>
@@ -55,7 +55,7 @@ const LoginPage = () => {
               autoFocus
             />
             {error.email && (
-              <div className='text-[#f02849] my-3'>{error.email}</div>
+              <div className='my-3 text-[#f02849]'>{error.email}</div>
             )}
           </div>
           <div className='my-4'>
@@ -68,7 +68,7 @@ const LoginPage = () => {
               onChange={handleInputChange}
             />
             {error.password && (
-              <div className='text-[#f02849] my-3'>{error.password}</div>
+              <div className='my-3 text-[#f02849]'>{error.password}</div>
             )}
           </div>
           <div className='my-4 text-right'>
@@ -83,10 +83,10 @@ const LoginPage = () => {
           </div>
         </div>
         {/* dividing line */}
-        <div className='text-center my-4'>Or continue with</div>
+        <div className='my-4 text-center'>Or continue with</div>
 
         {/* login options */}
-        <div className='flex my-8 justify-around'>
+        <div className='my-8 flex justify-around'>
           <a className='flex p-3' href='#'>
             <Image src={google} alt={'google icon'} />
           </a>
@@ -99,7 +99,7 @@ const LoginPage = () => {
         </div>
 
         {/* register */}
-        <div className='text-center my-4'>
+        <div className='my-4 text-center'>
           Not a member?
           <Link href='signup'>
             <a className='text-blue-600'> Sign up now</a>
