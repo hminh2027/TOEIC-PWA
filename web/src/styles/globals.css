@@ -41,6 +41,7 @@
   body,
   #__next {
     height: 100%;
+    background-image: linear-gradient(to bottom, #ffffff , #F3F4FE);
   }
 
   * {

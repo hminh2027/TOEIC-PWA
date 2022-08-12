@@ -1,13 +1,15 @@
 import { PrismaClient, Role } from '@prisma/client';
+import { usersList } from './data/users';
+import { sourcesList } from './data/sources';
+import { testsList } from './data/tests';
+import { questionsList } from './data/questions';
 
 const prisma = new PrismaClient();
 
 async function main() {
   await prisma.user.deleteMany();
 
-  console.log('Seeding...');
-  console.log('Start seeding users');
-  const user1 = await prisma.user.create({
+  await prisma.user.create({
     data: {
       email: 'admin@gmail.com',
       username: 'admin',
@@ -17,31 +19,29 @@ async function main() {
       role: Role.ADMIN,
     },
   });
-  const user2 = await prisma.user.create({
-    data: {
-      email: 'user@gmail.com',
-      username: 'user',
-      password:
-        '6dc10cfa72771ab641611005cad7d4da1acfcaa613921e67982e9ccf7503b66c',
-      avatar: '',
-      role: Role.USER,
-    },
-  });
 
-  console.log({ user1, user2 });
+  for (const user of usersList) {
+    await prisma.user.create({ data: user });
+  }
 
-  console.log('Start seeding test sources');
-  const source = await prisma.testSource.createMany({
-    data: [
-      { name: 'ETC 2020' },
-      { name: 'ETC 2021' },
-      { name: 'ETC 2022' },
-      { name: 'Economy 2018' },
-    ],
-  });
+  const sourceIds: string[] = [];
+  const testIds: string[] = [];
 
-  console.log(source);
-  console.log('Finished seeding');
+  for (const source of sourcesList) {
+    const createdSource = await prisma.testSource.create({ data: source });
+    sourceIds.push(createdSource.id);
+  }
+
+  for (const test of testsList) {
+    test.testSourceId = sourceIds[Math.floor(Math.random() * sourceIds.length)];
+    const createdTest = await prisma.test.create({ data: test });
+    testIds.push(createdTest.id);
+  }
+
+  for (const question of questionsList) {
+    question.testId = testIds[Math.floor(Math.random() * testIds.length)];
+    await prisma.question.create({ data: question });
+  }
 }
 
 main()
