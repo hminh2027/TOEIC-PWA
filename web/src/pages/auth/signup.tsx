@@ -37,11 +37,11 @@ const SignupPage = () => {
   };
 
   return (
-    <div className='flex h-full flex-col justify-center bg-[#f3eef2]'>
+    <div className='flex flex-col justify-center h-full bg-white'>
       {/* container */}
-      <div className='mx-6 flex flex-col justify-between bg-[#f3eef2]'>
+      <div className='flex flex-col justify-between mx-6 bg-white'>
         {/* heading */}
-        <div className='h1 my-4 text-center'>Sign Up</div>
+        <div className='my-4 text-center h1'>Sign Up</div>
         {/* form */}
         <div>
           <div className='my-4'>
@@ -54,9 +54,7 @@ const SignupPage = () => {
               onChange={handleInputChange}
               autoFocus
             />
-            {error.email && (
-              <div className='my-3 text-[#f02849]'>{error.email}</div>
-            )}
+            {error.email && <div className='my-3 text-red'>{error.email}</div>}
           </div>
           <div className='my-4'>
             <input
@@ -69,7 +67,7 @@ const SignupPage = () => {
               autoFocus
             />
             {error.username && (
-              <div className='my-3 text-[#f02849]'>{error.username}</div>
+              <div className='my-3 text-red'>{error.username}</div>
             )}
           </div>
           <div className='my-4'>
@@ -82,7 +80,7 @@ const SignupPage = () => {
               onChange={handleInputChange}
             />
             {error.password && (
-              <div className='my-3 text-[#f02849]'>{error.password}</div>
+              <div className='my-3 text-red'>{error.password}</div>
             )}
           </div>
           <div className='my-4'>
@@ -95,7 +93,7 @@ const SignupPage = () => {
               onChange={handleInputChange}
             />
             {error.password2 && (
-              <div className='my-3 text-[#f02849]'>{error.password2}</div>
+              <div className='my-3 text-red'>{error.password2}</div>
             )}
           </div>
           <div className='my-6'>

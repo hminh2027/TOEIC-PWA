@@ -1,3 +1,4 @@
+import { hashPassword } from '../src/common/utils/hash';
 import { PrismaClient, Role } from '@prisma/client';
 import { usersList } from './data/users';
 import { sourcesList } from './data/sources';
@@ -7,14 +8,13 @@ import { questionsList } from './data/questions';
 const prisma = new PrismaClient();
 
 async function main() {
-  await prisma.user.deleteMany();
+  const password = hashPassword('123456');
 
   await prisma.user.create({
     data: {
       email: 'admin@gmail.com',
       username: 'admin',
-      password:
-        '6dc10cfa72771ab641611005cad7d4da1acfcaa613921e67982e9ccf7503b66c',
+      password,
       avatar: '',
       role: Role.ADMIN,
     },
