@@ -6,6 +6,15 @@ import { UpdateTestInput } from './dto/update-test.input';
 @Injectable()
 export class TestsService {
   constructor(private readonly prismaService: PrismaService) {}
+
+  getByTestId(id: string) {
+    return this.prismaService.test.findUnique({ where: { id } });
+  }
+
+  getAll() {
+    return this.prismaService.test.findMany();
+  }
+
   create(payload: CreateTestInput) {
     return this.prismaService.test.create({ data: payload });
   }

@@ -1,31 +1,33 @@
 # TOEIC-PWA
+
 A pwa that supports learning and practicing for the toeic exam
 
 Tech stacks:
-- fe: next + zustand + tailwind
+
+- fe: next + zustand + tailwind + antd
 - be: nest + prisma
 - db: mysql
-- cache: redis
-- testing: jest
 - deploy: docker
 
 Features:
+
 - login/logout (lưu setting người dùng & thông tin)
-- quản trị 
+- quản trị
   - thông tin tài khoản user
   - upload đề
   - quản lý feedback
   - quản lý đề
-- thống kê 
+- thống kê
   - điểm trung bình
   - thời gian học
   - phổ điểm từng part
-- lưu câu hỏi yêu thích và chú thích
-- feedback câu hỏi
+- lưu và quản lý vocab
+- lưu đề yêu thích
+- feedback đề
 - chức năng giải đề
 
 Extend features:
-- lưu và quản lý vocab
+
 - tích hợp từ điển
 - notification
 - luợt hoàn thành bài + rating đề + điểm trung bình (public)

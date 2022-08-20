@@ -3,8 +3,6 @@ import { PrismaClient, Role } from '@prisma/client';
 import { usersList } from './data/users';
 import { sourcesList } from './data/sources';
 import { testsList } from './data/tests';
-import { questionsList } from './data/questions';
-import { answersList } from './data/answer';
 
 const prisma = new PrismaClient();
 
@@ -13,7 +11,6 @@ async function main() {
 
   const sourceIds: string[] = [];
   const testIds: string[] = [];
-  const questionIds: string[] = [];
 
   await prisma.user.create({
     data: {
@@ -38,18 +35,6 @@ async function main() {
     test.testSourceId = sourceIds[Math.floor(Math.random() * sourceIds.length)];
     const createdTest = await prisma.test.create({ data: test });
     testIds.push(createdTest.id);
-  }
-
-  for (const question of questionsList) {
-    question.testId = testIds[Math.floor(Math.random() * testIds.length)];
-    const createdQuestion = await prisma.question.create({ data: question });
-    questionIds.push(createdQuestion.id);
-  }
-
-  for (const answer of answersList) {
-    answer.questionId =
-      questionIds[Math.floor(Math.random() * questionIds.length)];
-    await prisma.answer.create({ data: answer });
   }
 }
 

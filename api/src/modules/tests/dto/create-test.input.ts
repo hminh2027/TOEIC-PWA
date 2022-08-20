@@ -18,6 +18,21 @@ export class CreateTestInput {
   @IsInt()
   duration: number;
 
+  @ApiProperty()
+  @IsNotEmpty()
+  image: string;
+
+  @ApiProperty({ nullable: true })
+  audio: string;
+
+  @ApiProperty({ default: 'ACBAD' })
+  @IsNotEmpty()
+  answer: string;
+
+  @ApiProperty({ default: '5', type: number })
+  @IsNotEmpty()
+  numberOfQuestions: number;
+
   @ApiProperty({ enum: TestCategory })
   @IsEnum(TestCategory)
   testCategory: TestCategory;

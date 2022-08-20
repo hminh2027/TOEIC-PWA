@@ -24,15 +24,31 @@ import { TestsService } from './tests.service';
 @ApiBearerAuth()
 @UsePipes(ValidationPipe)
 @UseGuards(JwtAuthGuard, RolesGuard)
-@Roles(Role.ADMIN)
 export class TestsController {
   constructor(private readonly testsService: TestsService) {}
+
+  @Get()
+  @ApiOperation({
+    description: 'Get all tests',
+  })
+  getALl() {
+    return this.testsService.getAll();
+  }
+
+  @Get(':id')
+  @ApiOperation({
+    description: 'Get a test by id',
+  })
+  getByTestId(@Param('id') id: string) {
+    return this.testsService.getByTestId(id);
+  }
 
   @Post()
   @ApiOperation({
     summary: '(ADMIN only)',
     description: 'Create new test',
   })
+  @Roles(Role.ADMIN)
   create(@Body() payload: CreateTestInput) {
     return this.testsService.create(payload);
   }
@@ -42,6 +58,7 @@ export class TestsController {
     summary: '(ADMIN only)',
     description: 'Update a test',
   })
+  @Roles(Role.ADMIN)
   update(@Param('id') id: string, @Body() updateTestDto: UpdateTestInput) {
     return this.testsService.update(id, updateTestDto);
   }
@@ -51,6 +68,7 @@ export class TestsController {
     summary: '(ADMIN only)',
     description: 'Delete a test',
   })
+  @Roles(Role.ADMIN)
   remove(@Param('id') id: string) {
     return this.testsService.remove(id);
   }
