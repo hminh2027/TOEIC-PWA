@@ -67,6 +67,7 @@ Table Attempt {
   userId String [not null]
   test Test [not null]
   testId String [not null]
+  answers Answer [not null]
 }
 
 Table Question {
@@ -76,14 +77,16 @@ Table Question {
   feedback Feedback
   test Test [not null]
   testId String [not null]
-  choices Choice [not null]
+  answers Answer [not null]
 }
 
-Table Choice {
+Table Answer {
   id String [pk]
   content String [not null]
+  correct Boolean [not null, default: false]
   question Question [not null]
   questionId String [not null]
+  attempts Attempt [not null]
 }
 
 Table Feedback {
@@ -96,6 +99,11 @@ Table Feedback {
   questionId String [unique, not null]
   user User [not null]
   userId String [not null]
+}
+
+Table AnswerToAttempt {
+  answersId String [ref: > Answer.id]
+  attemptsId String [ref: > Attempt.id]
 }
 
 Enum Role {
@@ -140,7 +148,7 @@ Ref: Attempt.testId > Test.id
 
 Ref: Question.testId > Test.id
 
-Ref: Choice.questionId > Question.id
+Ref: Answer.questionId > Question.id
 
 Ref: Feedback.questionId - Question.id
 

@@ -84,9 +84,10 @@ CREATE TABLE `questions` (
 ) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 
 -- CreateTable
-CREATE TABLE `choices` (
+CREATE TABLE `answers` (
     `id` VARCHAR(191) NOT NULL,
     `content` VARCHAR(191) NOT NULL,
+    `correct` BOOLEAN NOT NULL DEFAULT false,
     `questionId` VARCHAR(191) NOT NULL,
 
     PRIMARY KEY (`id`)
@@ -104,6 +105,15 @@ CREATE TABLE `feedbacks` (
 
     UNIQUE INDEX `feedbacks_questionId_key`(`questionId`),
     PRIMARY KEY (`id`)
+) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+
+-- CreateTable
+CREATE TABLE `_AnswerToAttempt` (
+    `A` VARCHAR(191) NOT NULL,
+    `B` VARCHAR(191) NOT NULL,
+
+    UNIQUE INDEX `_AnswerToAttempt_AB_unique`(`A`, `B`),
+    INDEX `_AnswerToAttempt_B_index`(`B`)
 ) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 
 -- AddForeignKey
@@ -128,10 +138,16 @@ ALTER TABLE `attempts` ADD CONSTRAINT `attempts_testId_fkey` FOREIGN KEY (`testI
 ALTER TABLE `questions` ADD CONSTRAINT `questions_testId_fkey` FOREIGN KEY (`testId`) REFERENCES `tests`(`id`) ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE `choices` ADD CONSTRAINT `choices_questionId_fkey` FOREIGN KEY (`questionId`) REFERENCES `questions`(`id`) ON DELETE RESTRICT ON UPDATE CASCADE;
+ALTER TABLE `answers` ADD CONSTRAINT `answers_questionId_fkey` FOREIGN KEY (`questionId`) REFERENCES `questions`(`id`) ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE `feedbacks` ADD CONSTRAINT `feedbacks_questionId_fkey` FOREIGN KEY (`questionId`) REFERENCES `questions`(`id`) ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE `feedbacks` ADD CONSTRAINT `feedbacks_userId_fkey` FOREIGN KEY (`userId`) REFERENCES `users`(`id`) ON DELETE RESTRICT ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE `_AnswerToAttempt` ADD FOREIGN KEY (`A`) REFERENCES `answers`(`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE `_AnswerToAttempt` ADD FOREIGN KEY (`B`) REFERENCES `attempts`(`id`) ON DELETE CASCADE ON UPDATE CASCADE;
