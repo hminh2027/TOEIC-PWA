@@ -40,24 +40,16 @@ model Config {
   userId      String    @unique
 }
 
-model Favorite {
-  @@map("favorites")
-  id          String    @id @default(cuid())
-  note        String?
-  //  1-1
-  question    Question? @relation(fields: [questionId], references: [id])
-  questionId  String?   @unique
-  //  N-1
-  user        User     @relation(fields: [userId], references: [id])
-  userId      String
-}
-
 model Test {
   @@map("tests")
   id          String    @id @default(cuid())
   title       String
   score       Int
   duration    Int
+  image       String
+  audio       String
+  answer      String
+  numberOfQuestions Int      
   createdAt   DateTime  @default(now())
   updatedAt   DateTime  @updatedAt
   deleted     Boolean   @default(false)
@@ -65,10 +57,12 @@ model Test {
   testSkill   TestSkill
   //  1-N
   attempts    Attempt[]
-  questions   Question[]
   //  N-1
   testSource  TestSource @relation(fields: [testSourceId], references: [id])
-  testSourceId String     
+  testSourceId String
+  // 1-1
+  favorite    Favorite?
+  feedback    Feedback?
 }
 
 model TestSource {
@@ -83,6 +77,7 @@ model Attempt {
   @@map("attempts")
   id          String    @id @default(cuid())
   score       Int
+  answer      String
   status      AttemptStatus      @default(NONE)
   createdAt   DateTime  @default(now())
   updatedAt   DateTime  @updatedAt
@@ -92,29 +87,14 @@ model Attempt {
   userId      String
   test        Test     @relation(fields: [testId], references: [id])
   testId      String
+
 }
 
-model Question {
-  @@map("questions")
+model Vocabulary {
+  @@map("vocabulary")
   id          String    @id @default(cuid())
-  content     String
-  //  1-1
-  favorite    Favorite?
-  feedback    Feedback?
-  //  N-1
-  test        Test     @relation(fields: [testId], references: [id])
-  testId      String   
-  //  1-N
-  choices     Choice[]
-}
-
-model Choice {
-  @@map("choices")
-  id          String    @id @default(cuid())
-  content     String
-  //  N-1
-  question    Question @relation(fields: [questionId], references: [id])
-  questionId  String   
+  word        String    @unique
+  meaning     String
 }
 
 model Feedback {
@@ -124,12 +104,24 @@ model Feedback {
   createdAt   DateTime  @default(now())
   updatedAt   DateTime  @updatedAt
   deleted     Boolean   @default(false)
+  //  N-1
+  user        User      @relation(fields: [userId], references: [id])
+  userId      String   
   //  1-1
-  question    Question  @relation(fields: [questionId], references: [id])
-  questionId  String    @unique
+  test        Test?     @relation(fields: [testId], references: [id])
+  testId      String?   @unique
+}
+
+model Favorite {
+  @@map("favorites")
+  id          String    @id @default(cuid())
+  note        String?
   //  N-1
   user        User     @relation(fields: [userId], references: [id])
-  userId      String   
+  userId      String
+  //  1-1
+  test    Test?   @relation(fields: [testId], references: [id])
+  testId  String?   @unique
 }
 
 enum Role {

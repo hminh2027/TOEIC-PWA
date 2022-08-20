@@ -7,7 +7,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
   return (
     <div className='flex h-screen overflow-y-hidden'>
       <SideBarMenu />
-      <div>
+      <div className='w-full'>
         <Header />
         {children}
       </div>

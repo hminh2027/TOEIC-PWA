@@ -1,3 +1,5 @@
+import Link from 'next/link';
+import Image from 'next/image';
 import * as React from 'react';
 
 const Header = () => {
@@ -5,7 +7,16 @@ const Header = () => {
     <header className='sticky top-0 z-50 bg-white'>
       <input type='text' />
       <div>icon</div>
-      // TODO create avatar component to reuse
+
+      {/*<Link src='/'>*/}
+      {/*  <Image*/}
+      {/*    className='object-contain'*/}
+      {/*    width={150}*/}
+      {/*    height={50}*/}
+      {/*    src={logo}*/}
+      {/*    alt='logo icon'*/}
+      {/*  />*/}
+      {/*</Link>*/}
     </header>
   );
 };

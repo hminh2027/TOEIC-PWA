@@ -26,7 +26,8 @@ const LoginPage = () => {
     });
   };
 
-  const handleSubmit = async () => {
+  const handleSubmit = async (e: React.FormEvent<HTMLInputElement>) => {
+    e.preventDefault();
     try {
       const res = await api.post('auth/login', { ...credential });
       notify(res.data.message, 'success');
@@ -37,13 +38,13 @@ const LoginPage = () => {
   };
 
   return (
-    <div className='bg-[#f3eef2] h-full flex flex-col justify-center'>
+    <div className='flex flex-col justify-center h-full bg-white'>
       {/* container */}
-      <div className='flex flex-col justify-between mx-6 lg:w-1/3 lg:mx-auto bg-[#f3eef2]'>
+      <div className='flex flex-col justify-between mx-6 bg-white lg:mx-auto lg:w-1/3'>
         {/* heading */}
-        <div className='h1 text-center my-4'>Login</div>
+        <div className='my-4 text-center h1'>Login</div>
         {/* form */}
-        <div>
+        <form method='post'>
           <div className='my-4'>
             <input
               className={error.email ? 'tw-input-err' : 'tw-input'}
@@ -54,9 +55,7 @@ const LoginPage = () => {
               onChange={handleInputChange}
               autoFocus
             />
-            {error.email && (
-              <div className='text-[#f02849] my-3'>{error.email}</div>
-            )}
+            {error.email && <div className='my-3 text-red'>{error.email}</div>}
           </div>
           <div className='my-4'>
             <input
@@ -68,7 +67,7 @@ const LoginPage = () => {
               onChange={handleInputChange}
             />
             {error.password && (
-              <div className='text-[#f02849] my-3'>{error.password}</div>
+              <div className='my-3 text-red'>{error.password}</div>
             )}
           </div>
           <div className='my-4 text-right'>
@@ -81,25 +80,34 @@ const LoginPage = () => {
               Log in
             </button>
           </div>
-        </div>
+        </form>
         {/* dividing line */}
-        <div className='text-center my-4'>Or continue with</div>
+        <div className='my-4 text-center'>Or continue with</div>
 
         {/* login options */}
-        <div className='flex my-8 justify-around'>
-          <a className='flex p-3' href='#'>
+        <div className='flex justify-around my-8'>
+          <a
+            className='flex p-3 transition-all border-4 border-white rounded-lg hover:border-purple'
+            href='#'
+          >
             <Image src={google} alt={'google icon'} />
           </a>
-          <a className='flex p-3' href='#'>
+          <a
+            className='flex p-3 transition-all border-4 border-white rounded-lg hover:border-purple'
+            href='#'
+          >
             <Image src={apple} alt={'apple icon'} />
           </a>
-          <a className='flex p-3' href='#'>
+          <a
+            className='flex p-3 transition-all border-4 border-white rounded-lg hover:border-purple'
+            href='#'
+          >
             <Image src={facebook} alt={'facebook icon'} />
           </a>
         </div>
 
         {/* register */}
-        <div className='text-center my-4'>
+        <div className='my-4 text-center'>
           Not a member?
           <Link href='signup'>
             <a className='text-blue-600'> Sign up now</a>

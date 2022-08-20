@@ -5,8 +5,7 @@ import { useRouter } from 'next/router';
 const defaultMeta = {
   title: 'Toeic learning app',
   siteName: 'Toeic learning app',
-  description:
-    'A pwa that supports learning and practicing for the toeic exam',
+  description: 'A pwa that supports learning and practicing for the toeic exam',
   /** Without additional '/' on the end, e.g. https://theodorusclarence.com */
   url: 'https://tsnext-tw.thcl.dev',
   type: 'website',

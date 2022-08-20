@@ -1,47 +1,41 @@
+import { hashPassword } from '../src/common/utils/hash';
 import { PrismaClient, Role } from '@prisma/client';
+import { usersList } from './data/users';
+import { sourcesList } from './data/sources';
+import { testsList } from './data/tests';
 
 const prisma = new PrismaClient();
 
 async function main() {
-  await prisma.user.deleteMany();
+  const password = hashPassword('123456');
 
-  console.log('Seeding...');
-  console.log('Start seeding users');
-  const user1 = await prisma.user.create({
+  const sourceIds: string[] = [];
+  const testIds: string[] = [];
+
+  await prisma.user.create({
     data: {
       email: 'admin@gmail.com',
       username: 'admin',
-      password:
-        '6dc10cfa72771ab641611005cad7d4da1acfcaa613921e67982e9ccf7503b66c',
+      password,
       avatar: '',
       role: Role.ADMIN,
     },
   });
-  const user2 = await prisma.user.create({
-    data: {
-      email: 'user@gmail.com',
-      username: 'user',
-      password:
-        '6dc10cfa72771ab641611005cad7d4da1acfcaa613921e67982e9ccf7503b66c',
-      avatar: '',
-      role: Role.USER,
-    },
-  });
 
-  console.log({ user1, user2 });
+  for (const user of usersList) {
+    await prisma.user.create({ data: user });
+  }
 
-  console.log('Start seeding test sources');
-  const source = await prisma.testSource.createMany({
-    data: [
-      { name: 'ETC 2020' },
-      { name: 'ETC 2021' },
-      { name: 'ETC 2022' },
-      { name: 'Economy 2018' },
-    ],
-  });
+  for (const source of sourcesList) {
+    const createdSource = await prisma.testSource.create({ data: source });
+    sourceIds.push(createdSource.id);
+  }
 
-  console.log(source);
-  console.log('Finished seeding');
+  for (const test of testsList) {
+    test.testSourceId = sourceIds[Math.floor(Math.random() * sourceIds.length)];
+    const createdTest = await prisma.test.create({ data: test });
+    testIds.push(createdTest.id);
+  }
 }
 
 main()

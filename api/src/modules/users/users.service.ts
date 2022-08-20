@@ -17,21 +17,21 @@ import { LoginInput } from '../auth/dto/login.input';
 
 @Injectable()
 export class UsersService {
-  constructor(private prisma: PrismaService) {}
+  constructor(private prismaService: PrismaService) {}
 
   async getByUserId(id: string): Promise<UserModel> {
-    const user = await this.prisma.user.findUnique({ where: { id } });
+    const user = await this.prismaService.user.findUnique({ where: { id } });
     return exclude(user, 'password');
   }
 
   async getByEmail(email: string): Promise<UserModel> {
-    const user = await this.prisma.user.findUnique({ where: { email } });
+    const user = await this.prismaService.user.findUnique({ where: { email } });
     return exclude(user, 'password');
   }
 
   async getByEmailAndPassword(payload: LoginInput): Promise<User> {
     const hashedPass = hashPassword(payload.password);
-    return await this.prisma.user.findFirst({
+    return await this.prismaService.user.findFirst({
       where: { email: payload.email, password: hashedPass },
     });
   }
@@ -40,7 +40,7 @@ export class UsersService {
     const hashedPass = hashPassword(payload.password);
     if (payload.password2) exclude(payload, 'password2');
     try {
-      return await this.prisma.user.create({
+      return await this.prismaService.user.create({
         data: {
           ...payload,
           password: hashedPass,
@@ -60,7 +60,7 @@ export class UsersService {
   }
 
   updateUser(userId: string, newUserData: UpdateUserInput) {
-    return this.prisma.user.update({
+    return this.prismaService.user.update({
       data: newUserData,
       where: {
         id: userId,
@@ -84,7 +84,7 @@ export class UsersService {
 
     const hashedPassword = hashPassword(changePassword.newPassword);
 
-    return this.prisma.user.update({
+    return this.prismaService.user.update({
       data: {
         password: hashedPassword,
       },
