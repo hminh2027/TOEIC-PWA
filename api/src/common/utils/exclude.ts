@@ -1,9 +1,9 @@
-export const exclude = <User, Key extends keyof User>(
-  user: User,
+export const exclude = <T, Key extends keyof T>(
+  resultSet: T,
   ...keys: Key[]
-): Omit<User, Key> => {
+): Omit<T, Key> => {
   for (let key of keys) {
-    delete user[key];
+    delete resultSet[key];
   }
-  return user;
+  return resultSet;
 };
