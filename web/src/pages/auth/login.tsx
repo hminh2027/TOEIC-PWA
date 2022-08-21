@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
-import { api } from '@/api/axios';
+import { api } from '@/api/http';
 import { ToastContainer } from 'react-toastify';
 import { notify } from '@/components/Toast';
 import google from '../../../public/images/google.png';
@@ -38,11 +38,11 @@ const LoginPage = () => {
   };
 
   return (
-    <div className='flex flex-col justify-center h-full bg-white'>
+    <div className='flex h-full flex-col justify-center bg-white'>
       {/* container */}
-      <div className='flex flex-col justify-between mx-6 bg-white lg:mx-auto lg:w-1/3'>
+      <div className='mx-6 flex flex-col justify-between bg-white lg:mx-auto lg:w-1/3'>
         {/* heading */}
-        <div className='my-4 text-center h1'>Login</div>
+        <div className='h1 my-4 text-center'>Login</div>
         {/* form */}
         <form method='post'>
           <div className='my-4'>
@@ -85,21 +85,21 @@ const LoginPage = () => {
         <div className='my-4 text-center'>Or continue with</div>
 
         {/* login options */}
-        <div className='flex justify-around my-8'>
+        <div className='my-8 flex justify-around'>
           <a
-            className='flex p-3 transition-all border-4 border-white rounded-lg hover:border-purple'
+            className='flex rounded-lg border-4 border-white p-3 transition-all hover:border-purple'
             href='#'
           >
             <Image src={google} alt={'google icon'} />
           </a>
           <a
-            className='flex p-3 transition-all border-4 border-white rounded-lg hover:border-purple'
+            className='flex rounded-lg border-4 border-white p-3 transition-all hover:border-purple'
             href='#'
           >
             <Image src={apple} alt={'apple icon'} />
           </a>
           <a
-            className='flex p-3 transition-all border-4 border-white rounded-lg hover:border-purple'
+            className='flex rounded-lg border-4 border-white p-3 transition-all hover:border-purple'
             href='#'
           >
             <Image src={facebook} alt={'facebook icon'} />

@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { api } from '@/api/axios';
+import { api } from '@/api/http';
 import { notify } from '@/components/Toast';
 import Link from 'next/link';
 import { ToastContainer } from 'react-toastify';
@@ -37,11 +37,11 @@ const SignupPage = () => {
   };
 
   return (
-    <div className='flex flex-col justify-center h-full bg-white'>
+    <div className='flex h-full flex-col justify-center bg-white'>
       {/* container */}
-      <div className='flex flex-col justify-between mx-6 bg-white'>
+      <div className='mx-6 flex flex-col justify-between bg-white'>
         {/* heading */}
-        <div className='my-4 text-center h1'>Sign Up</div>
+        <div className='h1 my-4 text-center'>Sign Up</div>
         {/* form */}
         <div>
           <div className='my-4'>

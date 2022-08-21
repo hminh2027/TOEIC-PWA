@@ -9,12 +9,6 @@ const HEADERS = {
   Authorization: '',
 };
 
-const HEADERS_MUlTIPLE_PART = {
-  ...HEADERS,
-  'Content-Type': 'multipart/form-data; boundary=something',
-  Accept: 'multipart/form-data',
-};
-
 const BASE_URL = process.env.NEXT_PUBLIC_API_URL;
 
 export const getURL = (url: string) => {
@@ -22,7 +16,22 @@ export const getURL = (url: string) => {
   return BASE_URL + url;
 };
 
-export const api = {
+const setAccessToken = (accessToken: string) => {
+  HEADERS.Authorization = `Bearer ${accessToken}`;
+};
+const setRefreshToken = (refreshToken: string) => {
+  console.log(refreshToken);
+  HEADERS.cookie = refreshToken;
+};
+
+const clearToken = () => {
+  delete HEADERS.Authorization;
+  delete HEADERS_MUlTIPLE_PART.Authorization;
+  delete HEADERS.cookie;
+  delete HEADERS_MUlTIPLE_PART.cookie;
+};
+
+const http = {
   get: (url: string, params = {}) => {
     return axios.get(getURL(url), {
       headers: HEADERS,
@@ -43,15 +52,17 @@ export const api = {
     });
   },
 
+  put: (url: string, params = {}) => {
+    return axios.put(getURL(url), params, {
+      headers: HEADERS,
+    });
+  },
+
   delete: (url: string) => {
     return axios.delete(getURL(url), {
       headers: HEADERS,
     });
   },
-
-  postMultiplePart: (url: string, params = {}) => {
-    return axios.post(getURL(url), params, {
-      headers: HEADERS_MUlTIPLE_PART,
-    });
-  },
 };
+
+export { setAccessToken, setRefreshToken, clearToken, http };
